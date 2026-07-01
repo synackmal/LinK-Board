@@ -928,7 +928,7 @@ let G = {
   usedKesempatan: [],
   answered: false,
   kuisTimerId: null,
-  kuisTimeLeft: 15,
+  kuisTimeLeft: 20,
   // Tantangan state
   challenger: -1,
   opponent: -1,
@@ -1223,7 +1223,7 @@ function renderKuisPlay() {
     <div class="modal-tag tag-kuis">🧠 Kuis</div>
     <div class="modal-title">Soal untuk <span style="color:${p.color}">${p.name}</span></div>
     <div class="timer-row">
-      <span class="timer-badge" id="kuis-timer">⏱ 15 detik</span>
+      <span class="timer-badge" id="kuis-timer">⏱ 20 detik</span>
     </div>
     <div class="point-stake">💰 Taruhan: ${G.pointValue} poin</div>
     ${contentHTML}`;
@@ -1271,7 +1271,7 @@ function clearKuisTimer() {
 }
 
 function startKuisTimer() {
-  G.kuisTimeLeft = 15;
+  G.kuisTimeLeft = 20;
   updateKuisTimerDisplay();
   G.kuisTimerId = setInterval(() => {
     G.kuisTimeLeft--;

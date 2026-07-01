@@ -1,0 +1,1559 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinK-Board — Board Game</title>
+<style>
+/* ===================== BASE ===================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --kuis:       #1A56DB;
+  --kuis-bg:    #EFF6FF;
+  --kuis-light: #BFDBFE;
+  --tantangan:  #DC2626;
+  --tng-bg:     #FFF1F1;
+  --tng-light:  #FECACA;
+  --kesempatan: #059669;
+  --ksp-bg:     #ECFDF5;
+  --ksp-light:  #A7F3D0;
+  --gold:       #F59E0B;
+  --bg:         #F8FAF5;
+  --card:       #FFFFFF;
+  --text:       #111827;
+  --muted:      #6B7280;
+  --border:     #E5E7EB;
+  --radius:     14px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+}
+
+button { cursor: pointer; font-family: inherit; border: none; }
+input  { font-family: inherit; }
+
+/* ===================== SCREENS ===================== */
+.screen { display: none; }
+.screen.active { display: flex; }
+
+/* ===================== SETUP ===================== */
+#screen-setup {
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 2rem;
+  background: linear-gradient(160deg, #F0FDF4 0%, #EFF6FF 100%);
+}
+
+.logo {
+  text-align: center;
+}
+.logo-main {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #059669, #1A56DB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.logo-sub {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.setup-card {
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+}
+
+.setup-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.player-rows { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.player-row input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color .2s;
+  background: #FAFAFA;
+}
+.player-row input:focus { border-color: #059669; background: white; }
+
+.setup-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.9rem;
+  background: #059669;
+  color: white;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  transition: background .2s, transform .1s;
+  margin-top: 1.5rem;
+}
+.btn-primary:hover  { background: #047857; }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  width: 100%;
+  padding: 0.7rem;
+  background: #F9FAFB;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: background .2s, border-color .2s;
+  margin-top: 1rem;
+}
+.btn-secondary:hover { background: white; border-color: #9CA3AF; }
+
+/* ===================== GAME SCREEN ===================== */
+#screen-game {
+  min-height: 100vh;
+  flex-direction: row;
+}
+
+/* --- Leaderboard sidebar --- */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: white;
+  border-right: 1.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  gap: 0.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  padding: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.lb-card {
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1.5px solid var(--border);
+  transition: border-color .2s, background .2s;
+  background: #FAFAFA;
+}
+.lb-card.first-place {
+  border-color: var(--gold);
+  background: #FFFBEB;
+}
+
+.lb-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  color: white;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.lb-info { flex: 1; min-width: 0; }
+.lb-name  {
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lb-score { font-size: 1.2rem; font-weight: 800; }
+
+.lb-rank { font-size: 1rem; }
+
+.lb-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.score-edit-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: white;
+  border: 1.5px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.score-edit-btn:hover { border-color: var(--kuis); color: var(--kuis); background: var(--kuis-bg); }
+
+.score-edit-row {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.score-edit-input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.35rem 0.45rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.score-edit-input:focus { outline: none; border-color: var(--kuis); }
+
+.score-save-btn {
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  background: var(--kuis);
+  color: white;
+  font-weight: 800;
+  font-size: 0.78rem;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.5rem 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.btn-reset {
+  width: 100%;
+  padding: 0.5rem;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: color .2s, border-color .2s;
+}
+.btn-reset:hover { color: var(--tantangan); border-color: var(--tantangan); }
+
+/* --- Main area --- */
+.main-area {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 100vh;
+}
+
+.game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #059669, #1A56DB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.main-card {
+  border-radius: 22px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .2s;
+  background: rgba(255,255,255,0.15);
+}
+
+.main-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+.main-card:hover::before { opacity: 1; }
+.main-card:active { transform: scale(0.97); }
+
+.card-kuis       { background: linear-gradient(145deg, #1D4ED8, #3B82F6); }
+.card-tantangan  { background: linear-gradient(145deg, #B91C1C, #EF4444); }
+.card-kesempatan { background: linear-gradient(145deg, #065F46, #10B981); }
+
+.card-emoji { font-size: 3.5rem; }
+
+.card-label {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.card-desc {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.82);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ===================== MODAL ===================== */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  backdrop-filter: blur(3px);
+}
+.overlay.show { display: flex; }
+
+.modal {
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp .25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: var(--border);
+  border: none;
+  border-radius: 50%;
+  width: 30px; height: 30px;
+  font-size: 1rem;
+  color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.modal-close:hover { background: #d1d5db; }
+
+/* modal type headers */
+.modal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+.tag-kuis       { background: var(--kuis-light);  color: #1E40AF; }
+.tag-tantangan  { background: var(--tng-light);   color: #991B1B; }
+.tag-kesempatan { background: var(--ksp-light);   color: #065F46; }
+
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+/* ---- Form elements ---- */
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-group { margin-bottom: 1.2rem; }
+
+.select-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.sel-btn {
+  padding: 0.6rem 0.5rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: #FAFAFA;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: border-color .15s, background .15s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sel-btn:hover   { border-color: #9CA3AF; background: white; }
+.sel-btn.active  { border-color: #059669; background: var(--ksp-bg); color: #059669; }
+.sel-btn .mini-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.point-grid {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pt-btn {
+  padding: 0.5rem 1.1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: #FAFAFA;
+  transition: all .15s;
+}
+.pt-btn:hover  { border-color: #9CA3AF; background: white; }
+.pt-btn.active { border-color: var(--kuis); background: var(--kuis-bg); color: var(--kuis); }
+
+.bet-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  outline: none;
+  transition: border-color .2s;
+}
+.bet-input:focus { border-color: var(--tantangan); }
+
+/* ---- Question area ---- */
+.question-kategori {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.question-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.big-emoji {
+  font-size: 5rem;
+  text-align: center;
+  margin: 1rem 0;
+  display: block;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.opt-btn {
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #FAFAFA;
+  text-align: left;
+  line-height: 1.3;
+  transition: all .15s;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.opt-btn:hover:not(:disabled) { border-color: var(--kuis); background: var(--kuis-bg); }
+.opt-btn.correct  { border-color: #059669; background: var(--ksp-bg); color: #065F46; }
+.opt-btn.wrong    { border-color: var(--tantangan); background: var(--tng-bg); color: #991B1B; }
+.opt-btn:disabled { cursor: default; }
+
+.opt-letter {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--muted);
+  min-width: 16px;
+  margin-top: 1px;
+}
+
+.fm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.fm-btn {
+  padding: 1.2rem;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  border: 2.5px solid;
+  transition: all .15s;
+}
+.fm-fakta { border-color: var(--kuis);      background: var(--kuis-bg);  color: var(--kuis); }
+.fm-mitos { border-color: var(--tantangan); background: var(--tng-bg);   color: var(--tantangan); }
+.fm-fakta:hover { background: #DBEAFE; }
+.fm-mitos:hover { background: #FEE2E2; }
+.fm-fakta.correct, .fm-mitos.correct { background: #D1FAE5; border-color: #059669; color: #065F46; }
+.fm-fakta.wrong,   .fm-mitos.wrong   { background: #FEE2E2; border-color: #DC2626; color: #991B1B; }
+.fm-btn:disabled { cursor: default; }
+
+/* ---- Result ---- */
+.result-box {
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.result-box.win  { background: var(--ksp-bg);  border: 1.5px solid var(--ksp-light); }
+.result-box.lose { background: var(--tng-bg); border: 1.5px solid var(--tng-light); }
+.result-box.info { background: #F3F4F6; border: 1.5px solid var(--border); }
+
+.result-icon  { font-size: 2.2rem; }
+.result-text  { flex: 1; }
+.result-label { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+.result-main  { font-size: 1.3rem; font-weight: 800; line-height: 1.3; }
+.result-main.green { color: #059669; }
+.result-main.red   { color: var(--tantangan); }
+
+.explanation-box {
+  background: #F9FAFB;
+  border-left: 4px solid var(--kuis);
+  border-radius: 0 10px 10px 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 1.25rem 0;
+}
+
+/* ---- Tantangan ---- */
+.challenge-box {
+  background: var(--tng-bg);
+  border: 2px solid var(--tng-light);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+.challenge-emoji { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+.challenge-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #7F1D1D;
+  margin-bottom: 0.5rem;
+}
+.challenge-desc {
+  color: #991B1B;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.vs-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.vs-player {
+  flex: 1;
+  background: #F9FAFB;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  text-align: center;
+}
+.vs-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  color: white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 0.4rem;
+}
+.vs-name  { font-size: 0.88rem; font-weight: 700; }
+.vs-score { font-size: 0.78rem; color: var(--muted); }
+.vs-text  { font-size: 1.3rem; font-weight: 900; color: var(--muted); }
+
+.winner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.winner-btn {
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: #FAFAFA;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  transition: all .15s;
+}
+.winner-btn:hover { border-color: #9CA3AF; background: white; }
+.winner-btn .w-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  color: white;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ---- Kesempatan ---- */
+.ksp-card {
+  border-radius: 18px;
+  padding: 2rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+.ksp-card.positive { background: var(--ksp-bg);  border: 2px solid var(--ksp-light); }
+.ksp-card.negative { background: var(--tng-bg); border: 2px solid var(--tng-light); }
+.ksp-card.neutral  { background: #EFF6FF; border: 2px solid #BFDBFE; }
+
+.ksp-icon  { font-size: 3.5rem; margin-bottom: 0.75rem; display: block; }
+.ksp-title { font-size: 1.2rem; font-weight: 900; margin-bottom: 0.5rem; }
+.ksp-desc  { font-size: 0.92rem; line-height: 1.6; color: var(--muted); }
+
+/* ---- Buttons ---- */
+.btn-action {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  transition: opacity .2s, transform .1s;
+  margin-top: 0.5rem;
+}
+.btn-action:hover  { opacity: 0.9; }
+.btn-action:active { transform: scale(0.98); }
+
+.btn-blue  { background: var(--kuis); }
+.btn-red   { background: var(--tantangan); }
+.btn-green { background: var(--kesempatan); }
+.btn-gray  { background: #6B7280; }
+
+.btn-outline {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: none;
+  border: 2px solid var(--border);
+  color: var(--muted);
+  transition: all .15s;
+  margin-top: 0.5rem;
+}
+.btn-outline:hover { border-color: #9CA3AF; color: var(--text); }
+
+.timer-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.timer-badge {
+  background: var(--tng-bg);
+  color: var(--tantangan);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.timer-badge.warning {
+  background: var(--tng-light);
+  animation: pulseTimer .8s infinite alternate;
+}
+
+@keyframes pulseTimer {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+.point-stake {
+  background: var(--kuis-bg);
+  border: 1.5px solid var(--kuis-light);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--kuis);
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* ===================== TOAST ===================== */
+#toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #111827;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 999;
+  transition: transform .3s;
+  white-space: nowrap;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  #screen-game { flex-direction: column; }
+  .sidebar { width: 100%; min-height: auto; height: auto; flex-direction: row; flex-wrap: wrap; position: static; border-right: none; border-bottom: 1.5px solid var(--border); }
+  .sidebar-title, .sidebar-divider, .sidebar-footer { display: none; }
+  .lb-card { flex-direction: column; text-align: center; font-size: 0.8rem; min-width: 80px; }
+  .card-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============== SETUP SCREEN ============== -->
+<section id="screen-setup" class="screen active">
+  <div class="logo">
+    <div class="logo-main">LinK-Board</div>
+    <div class="logo-sub">Board Game — Lingkungan & Kesehatan</div>
+  </div>
+
+  <div class="setup-card">
+    <div class="setup-label">Masukkan nama pemain (min. 2)</div>
+    <div class="player-rows" id="player-rows">
+      <!-- generated by JS -->
+    </div>
+    <button class="btn-secondary" type="button" onclick="addPlayerInput()">+ Tambah Pemain</button>
+    <div class="setup-hint">Kosongi nama jika pemain belum ikut</div>
+    <button class="btn-primary" onclick="startGame()">🎮 Mulai Permainan</button>
+  </div>
+</section>
+
+<!-- ============== GAME SCREEN ============== -->
+<section id="screen-game" class="screen">
+  <!-- Sidebar Leaderboard -->
+  <aside class="sidebar" id="leaderboard">
+    <div class="sidebar-title">Papan Skor</div>
+    <!-- generated by JS -->
+  </aside>
+
+  <!-- Main -->
+  <main class="main-area">
+    <div class="game-topbar">
+      <div class="game-title">LinK-Board</div>
+    </div>
+
+    <div class="card-grid">
+      <button class="main-card card-kuis" onclick="openKuis()">
+        <span class="card-emoji">🧠</span>
+        <span class="card-label">KUIS</span>
+        <span class="card-desc">Pilihan ganda, fakta-mitos, dan tebak gambar</span>
+      </button>
+      <button class="main-card card-tantangan" onclick="openTantangan()">
+        <span class="card-emoji">⚔️</span>
+        <span class="card-label">TANTANGAN</span>
+        <span class="card-desc">Battle duo — taruhkan poinmu!</span>
+      </button>
+      <button class="main-card card-kesempatan" onclick="openKesempatan()">
+        <span class="card-emoji">🎴</span>
+        <span class="card-label">KESEMPATAN</span>
+        <span class="card-desc">Kartu acak — bisa beruntung atau tidak!</span>
+      </button>
+    </div>
+  </main>
+</section>
+
+<!-- ============== MODAL KUIS ============== -->
+<div class="overlay" id="overlay-kuis">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('overlay-kuis')">✕</button>
+    <div id="kuis-content"></div>
+  </div>
+</div>
+
+<!-- ============== MODAL TANTANGAN ============== -->
+<div class="overlay" id="overlay-tantangan">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('overlay-tantangan')">✕</button>
+    <div id="tantangan-content"></div>
+  </div>
+</div>
+
+<!-- ============== MODAL KESEMPATAN ============== -->
+<div class="overlay" id="overlay-kesempatan">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('overlay-kesempatan')">✕</button>
+    <div id="kesempatan-content"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="link-cards.js"></script>
+<script>
+/* ================================================
+   WARNA PEMAIN
+   ================================================ */
+const PLAYER_COLORS = ['#EF4444','#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899','#14B8A6','#F97316','#6366F1','#84CC16','#06B6D4','#D946EF'];
+
+/* ================================================
+   STATE GLOBAL
+   ================================================ */
+let G = {
+  players: [],
+  editingScore: -1,
+  // Kuis state
+  activePlayer: -1,
+  pointValue: 10,
+  currentCard: null,
+  usedKuis: [],
+  usedTantangan: [],
+  usedKesempatan: [],
+  answered: false,
+  kuisTimerId: null,
+  kuisTimeLeft: 15,
+  // Tantangan state
+  challenger: -1,
+  opponent: -1,
+  betAmount: 100,
+  tantanganTimerId: null,
+  tantanganTimeLeft: 0,
+  // Kesempatan state
+  kesempatanPlayer: -1,
+};
+
+/* ================================================
+   SETUP
+   ================================================ */
+const INPUT_PLACEHOLDER = [
+  'Nama Pemain 1','Nama Pemain 2','Nama Pemain 3',
+  'Nama Pemain 4 (opsional)','Nama Pemain 5 (opsional)','Nama Pemain 6 (opsional)'
+];
+let playerInputCount = 0;
+
+function getPlayerColor(index) {
+  if (PLAYER_COLORS[index]) return PLAYER_COLORS[index];
+  const hue = (index * 47) % 360;
+  return `hsl(${hue}, 72%, 48%)`;
+}
+
+function addPlayerInput() {
+  const rows = document.getElementById('player-rows');
+  const i = playerInputCount;
+  const placeholder = INPUT_PLACEHOLDER[i] || `Nama Pemain ${i + 1} (opsional)`;
+  rows.innerHTML += `
+    <div class="player-row">
+      <div class="dot" style="background:${getPlayerColor(i)}"></div>
+      <input id="p${i}" type="text" placeholder="${placeholder}" maxlength="20"
+        ${i < 2 ? 'required' : ''} />
+    </div>`;
+  playerInputCount++;
+}
+
+function initSetup() {
+  const rows = document.getElementById('player-rows');
+  rows.innerHTML = '';
+  playerInputCount = 0;
+  for (let i = 0; i < 6; i++) addPlayerInput();
+}
+
+function startGame() {
+  const names = [];
+  const inputs = document.querySelectorAll('#player-rows input');
+  inputs.forEach(input => {
+    const val = input.value.trim();
+    if (val) names.push(val);
+  });
+  if (names.length < 2) { showToast('Minimal 2 pemain diperlukan!'); return; }
+
+  G.players = names.map((name, i) => ({
+    name, score: 1000, color: getPlayerColor(i),
+    initial: name.charAt(0).toUpperCase()
+  }));
+  G.usedKuis = [];
+  G.usedTantangan = [];
+  G.usedKesempatan = [];
+
+  switchScreen('screen-game');
+  renderLeaderboard();
+}
+
+/* ================================================
+   SCREENS & MODALS
+   ================================================ */
+function switchScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+  G.answered = false;
+  clearKuisTimer();
+  clearTantanganTimer();
+}
+
+/* ================================================
+   LEADERBOARD
+   ================================================ */
+function renderLeaderboard() {
+  const sorted = G.players
+    .map((p, idx) => ({...p, idx}))
+    .sort((a,b) => b.score - a.score);
+  const ranks = ['🥇','🥈','🥉'];
+  const lb = document.getElementById('leaderboard');
+  lb.innerHTML = '<div class="sidebar-title">Papan Skor</div>';
+  sorted.forEach((p, i) => {
+    const isEditing = G.editingScore === p.idx;
+    lb.innerHTML += `
+      <div class="lb-card ${i===0?'first-place':''}">
+        <div class="lb-avatar" style="background:${p.color}">${p.initial}</div>
+        <div class="lb-info">
+          <div class="lb-name">${p.name}</div>
+          ${isEditing ? `
+            <div class="score-edit-row">
+              <input class="score-edit-input" id="score-edit-${p.idx}" type="number" value="${p.score}"
+                onkeydown="if(event.key==='Enter'){saveEditedScore(${p.idx})}" />
+              <button class="score-save-btn" onclick="saveEditedScore(${p.idx})">OK</button>
+            </div>
+          ` : `
+            <div class="lb-score">${p.score.toLocaleString()}</div>
+          `}
+        </div>
+        <div class="lb-actions">
+          <button class="score-edit-btn" title="Edit skor ${p.name}"
+            onclick="toggleScoreEdit(${p.idx})">${isEditing ? '✕' : '✎'}</button>
+          <div class="lb-rank">${ranks[i] || i + 1}</div>
+        </div>
+      </div>`;
+  });
+  lb.innerHTML += `
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-footer">
+      <button class="btn-reset" onclick="if(confirm('Reset skor semua pemain?')){G.players.forEach(p=>p.score=1000);renderLeaderboard();showToast('Skor direset!');}">
+        🔄 Reset Skor
+      </button>
+    </div>`;
+}
+
+function toggleScoreEdit(playerIdx) {
+  G.editingScore = G.editingScore === playerIdx ? -1 : playerIdx;
+  renderLeaderboard();
+  if (G.editingScore === playerIdx) {
+    setTimeout(() => {
+      const input = document.getElementById(`score-edit-${playerIdx}`);
+      if (input) { input.focus(); input.select(); }
+    }, 0);
+  }
+}
+
+function saveEditedScore(playerIdx) {
+  const input = document.getElementById(`score-edit-${playerIdx}`);
+  if (!input) return;
+  const nextScore = parseInt(input.value, 10);
+  if (Number.isNaN(nextScore)) { showToast('Skor harus berupa angka!'); return; }
+  const delta = nextScore - G.players[playerIdx].score;
+  G.players[playerIdx].score = nextScore;
+  G.editingScore = -1;
+  renderLeaderboard();
+  if (delta !== 0) playScoreSound(delta);
+  showToast('Skor diperbarui!');
+}
+
+function updateScore(playerIdx, delta, withSound = true) {
+  G.players[playerIdx].score += delta;
+  renderLeaderboard();
+  if (withSound && delta !== 0) playScoreSound(delta);
+}
+
+let audioCtx;
+function playTone(freq, start, duration, type = 'sine', gain = 0.12) {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = audioCtx.createOscillator();
+  const amp = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime + start);
+  amp.gain.setValueAtTime(0.0001, audioCtx.currentTime + start);
+  amp.gain.exponentialRampToValueAtTime(gain, audioCtx.currentTime + start + 0.02);
+  amp.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + start + duration);
+  osc.connect(amp);
+  amp.connect(audioCtx.destination);
+  osc.start(audioCtx.currentTime + start);
+  osc.stop(audioCtx.currentTime + start + duration + 0.03);
+}
+
+function playScoreSound(delta) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (delta > 0) {
+      playTone(523.25, 0, 0.12, 'triangle');
+      playTone(659.25, 0.1, 0.12, 'triangle');
+      playTone(783.99, 0.2, 0.18, 'triangle');
+    } else {
+      playTone(392, 0, 0.14, 'sawtooth', 0.08);
+      playTone(329.63, 0.12, 0.2, 'sawtooth', 0.08);
+    }
+  } catch (err) {
+    console.warn('Audio tidak bisa diputar:', err);
+  }
+}
+
+/* ================================================
+   KUIS
+   ================================================ */
+function openKuis() {
+  clearKuisTimer();
+  G.activePlayer = -1;
+  G.pointValue = 10;
+  G.currentCard = null;
+  G.answered = false;
+  renderKuisStep1();
+  openModal('overlay-kuis');
+}
+
+function renderKuisStep1() {
+  const available = G.players.map((p,i) => ({...p, idx:i}));
+  const ptOptions = Array.from({ length: 14 }, (_, i) => (i + 1) * 5);
+  let selGridHTML = available.map(p => `
+    <button class="sel-btn ${G.activePlayer===p.idx?'active':''}"
+      onclick="G.activePlayer=${p.idx};renderKuisStep1()">
+      <div class="mini-dot" style="background:${p.color}"></div>
+      ${p.name}
+    </button>`).join('');
+
+  let ptGridHTML = ptOptions.map(pt => `
+    <button class="pt-btn ${G.pointValue===pt?'active':''}"
+      onclick="G.pointValue=${pt};renderKuisStep1()">
+      ${pt} pts
+    </button>`).join('');
+
+  document.getElementById('kuis-content').innerHTML = `
+    <div class="modal-tag tag-kuis">🧠 Kuis</div>
+    <div class="modal-title">Siapa yang bermain?</div>
+    <div class="form-group">
+      <label class="form-label">Pilih Pemain</label>
+      <div class="select-grid">${selGridHTML}</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Poin di Kotak (sesuai papan fisik)</label>
+      <div class="point-grid">${ptGridHTML}</div>
+    </div>
+    <button class="btn-action btn-blue"
+      onclick="if(G.activePlayer<0){showToast('Pilih pemain dulu!')}else{renderKuisPlay()}">
+      Tampilkan Soal →
+    </button>`;
+}
+
+function getRandomCard(data, used) {
+  let available = data.map((_,i)=>i).filter(i => !used.includes(i));
+  if (available.length === 0) { used.length = 0; available = data.map((_,i)=>i); }
+  const idx = available[Math.floor(Math.random() * available.length)];
+  used.push(idx);
+  return { card: data[idx], idx };
+}
+
+function renderKuisPlay() {
+  clearKuisTimer();
+  const { card } = getRandomCard(KUIS_DATA, G.usedKuis);
+  G.currentCard = card;
+  G.answered = false;
+  const p = G.players[G.activePlayer];
+  let contentHTML = '';
+
+  if (card.type === 'pilgan') {
+    const letters = ['A','B','C','D'];
+    contentHTML = `
+      <div class="question-kategori">${card.kategori}</div>
+      <div class="question-text">${card.soal}</div>
+      <div class="options-grid">
+        ${card.opsi.map((o,i) => `
+          <button class="opt-btn" id="opt-${i}"
+            onclick="answerPilgan(${i},${card.jawaban},${G.pointValue})">
+            <span class="opt-letter">${letters[i]}</span>${o}
+          </button>`).join('')}
+      </div>`;
+  } else if (card.type === 'faktamitos') {
+    contentHTML = `
+      <div class="question-kategori">${card.kategori}</div>
+      <div class="question-text">${card.pernyataan}</div>
+      <div class="fm-grid">
+        <button class="fm-btn fm-fakta" id="fm-true"
+          onclick="answerFM(true,${card.jawaban},${G.pointValue})">✅ FAKTA</button>
+        <button class="fm-btn fm-mitos" id="fm-false"
+          onclick="answerFM(false,${card.jawaban},${G.pointValue})">❌ MITOS</button>
+      </div>`;
+  } else {
+    const letters = ['A','B','C','D'];
+    contentHTML = `
+      <div class="question-kategori">${card.kategori}</div>
+      <div class="question-text">${card.petunjuk}</div>
+      <span class="big-emoji">${card.gambar}</span>
+      <div class="options-grid">
+        ${card.opsi.map((o,i) => `
+          <button class="opt-btn" id="opt-${i}"
+            onclick="answerPilgan(${i},${card.jawaban},${G.pointValue})">
+            <span class="opt-letter">${letters[i]}</span>${o}
+          </button>`).join('')}
+      </div>`;
+  }
+
+  document.getElementById('kuis-content').innerHTML = `
+    <div class="modal-tag tag-kuis">🧠 Kuis</div>
+    <div class="modal-title">Soal untuk <span style="color:${p.color}">${p.name}</span></div>
+    <div class="timer-row">
+      <span class="timer-badge" id="kuis-timer">⏱ 15 detik</span>
+    </div>
+    <div class="point-stake">💰 Taruhan: ${G.pointValue} poin</div>
+    ${contentHTML}`;
+  startKuisTimer();
+}
+
+function answerPilgan(selected, correct, pts) {
+  if (G.answered) return;
+  G.answered = true;
+  clearKuisTimer();
+  const opts = document.querySelectorAll('.opt-btn');
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    else if (i === selected && selected !== correct) btn.classList.add('wrong');
+  });
+  const isRight = selected === correct;
+  const delta = isRight ? pts : -pts;
+  updateScore(G.activePlayer, delta);
+  showKuisResult(isRight, delta);
+}
+
+function answerFM(answer, correct, pts) {
+  if (G.answered) return;
+  G.answered = true;
+  clearKuisTimer();
+  document.getElementById('fm-true').disabled = true;
+  document.getElementById('fm-false').disabled = true;
+  const isRight = answer === correct;
+  const delta = isRight ? pts : -pts;
+  if (correct === true) {
+    document.getElementById('fm-true').classList.add('correct');
+    if (!isRight) document.getElementById('fm-false').classList.add('wrong');
+  } else {
+    document.getElementById('fm-false').classList.add('correct');
+    if (!isRight) document.getElementById('fm-true').classList.add('wrong');
+  }
+  updateScore(G.activePlayer, delta);
+  showKuisResult(isRight, delta);
+}
+
+function clearKuisTimer() {
+  clearInterval(G.kuisTimerId);
+  G.kuisTimerId = null;
+}
+
+function startKuisTimer() {
+  G.kuisTimeLeft = 15;
+  updateKuisTimerDisplay();
+  G.kuisTimerId = setInterval(() => {
+    G.kuisTimeLeft--;
+    updateKuisTimerDisplay();
+    if (G.kuisTimeLeft <= 0) handleKuisTimeout();
+  }, 1000);
+}
+
+function updateKuisTimerDisplay() {
+  const badge = document.getElementById('kuis-timer');
+  if (!badge) return;
+  badge.textContent = `⏱ ${G.kuisTimeLeft} detik`;
+  badge.classList.toggle('warning', G.kuisTimeLeft <= 5);
+}
+
+function handleKuisTimeout() {
+  if (G.answered) return;
+  G.answered = true;
+  clearKuisTimer();
+  document.querySelectorAll('.opt-btn, .fm-btn').forEach(btn => btn.disabled = true);
+  if (G.currentCard.type === 'pilgan' || G.currentCard.type === 'tebakgambar') {
+    const correctBtn = document.getElementById(`opt-${G.currentCard.jawaban}`);
+    if (correctBtn) correctBtn.classList.add('correct');
+  } else if (G.currentCard.type === 'faktamitos') {
+    const correctBtn = document.getElementById(`fm-${G.currentCard.jawaban}`);
+    if (correctBtn) correctBtn.classList.add('correct');
+  }
+  const delta = -G.pointValue;
+  updateScore(G.activePlayer, delta);
+  showKuisResult(false, delta, true);
+}
+
+function showKuisResult(isRight, delta, timedOut = false) {
+  const p = G.players[G.activePlayer];
+  const mainText = timedOut
+    ? `Waktu habis! −${Math.abs(delta)} poin`
+    : `${isRight?'Benar! +'+Math.abs(delta):'Salah! −'+Math.abs(delta)} poin`;
+  const resultBox = `
+    <div class="result-box ${isRight?'win':'lose'}">
+      <div class="result-icon">${isRight?'🎉':(timedOut?'⏱':'😔')}</div>
+      <div class="result-text">
+        <div class="result-label">${p.name}</div>
+        <div class="result-main ${isRight?'green':'red'}">${mainText}</div>
+      </div>
+    </div>
+    <div class="explanation-box">💡 ${G.currentCard.fakta}</div>
+    <div class="divider"></div>
+    <button class="btn-action btn-blue" onclick="openKuis()">Kuis Lagi</button>
+    <button class="btn-outline" onclick="closeModal('overlay-kuis')">Tutup</button>`;
+  document.getElementById('kuis-content').innerHTML += resultBox;
+  document.getElementById('overlay-kuis').querySelector('.modal').scrollTop = 9999;
+}
+
+/* ================================================
+   TANTANGAN
+   ================================================ */
+function openTantangan() {
+  clearTantanganTimer();
+  G.challenger = -1;
+  G.opponent = -1;
+  G.betAmount = 100;
+  renderTantanganStep1();
+  openModal('overlay-tantangan');
+}
+
+function renderTantanganStep1() {
+  const selGrid = (key) => G.players.map((p,i) => `
+    <button class="sel-btn ${G[key]===i?'active':''}"
+      onclick="G.${key}=${i};renderTantanganStep1()">
+      <div class="mini-dot" style="background:${p.color}"></div>
+      ${p.name}
+    </button>`).join('');
+
+  document.getElementById('tantangan-content').innerHTML = `
+    <div class="modal-tag tag-tantangan">⚔️ Tantangan</div>
+    <div class="modal-title">Siapa vs Siapa?</div>
+    <div class="form-group">
+      <label class="form-label">Penantang (yang landing di kotak)</label>
+      <div class="select-grid">${selGrid('challenger')}</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Lawan yang dipilih</label>
+      <div class="select-grid">${selGrid('opponent')}</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Taruhan Poin (maks. poin terendah dari keduanya)</label>
+      <input class="bet-input" type="number" min="10" max="9999" value="${G.betAmount}"
+        oninput="G.betAmount=parseInt(this.value)||0" placeholder="Masukkan jumlah poin..." />
+    </div>
+    <button class="btn-action btn-red" onclick="validateTantangan()">⚔️ Mulai Battle →</button>`;
+}
+
+function validateTantangan() {
+  if (G.challenger < 0) { showToast('Pilih penantang dulu!'); return; }
+  if (G.opponent < 0)   { showToast('Pilih lawan dulu!'); return; }
+  if (G.challenger === G.opponent) { showToast('Penantang dan lawan harus berbeda!'); return; }
+  if (!G.betAmount || G.betAmount < 1) { showToast('Masukkan jumlah taruhan!'); return; }
+  const maxBet = Math.min(G.players[G.challenger].score, G.players[G.opponent].score);
+  if (G.betAmount > maxBet) { showToast(`Taruhan maks ${maxBet} (poin terendah di antara keduanya)`); return; }
+  renderTantanganPlay();
+}
+
+function renderTantanganPlay() {
+  clearTantanganTimer();
+  const { card } = getRandomCard(TANTANGAN_DATA, G.usedTantangan);
+  G.currentCard = card;
+  const c = G.players[G.challenger];
+  const o = G.players[G.opponent];
+  const challengeSeconds = getChallengeSeconds(card);
+
+  document.getElementById('tantangan-content').innerHTML = `
+    <div class="modal-tag tag-tantangan">⚔️ Tantangan</div>
+    ${challengeSeconds ? `
+      <div class="timer-row">
+        <span class="timer-badge" id="tantangan-timer">⏱ ${challengeSeconds} detik</span>
+      </div>
+    ` : ''}
+    <div class="vs-row">
+      <div class="vs-player">
+        <div class="vs-avatar" style="background:${c.color}">${c.initial}</div>
+        <div class="vs-name">${c.name}</div>
+        <div class="vs-score">${c.score.toLocaleString()} poin</div>
+      </div>
+      <div class="vs-text">VS</div>
+      <div class="vs-player">
+        <div class="vs-avatar" style="background:${o.color}">${o.initial}</div>
+        <div class="vs-name">${o.name}</div>
+        <div class="vs-score">${o.score.toLocaleString()} poin</div>
+      </div>
+    </div>
+    <div class="point-stake" style="display:block;text-align:center;margin-bottom:1rem">
+      💰 Taruhan: ${G.betAmount.toLocaleString()} poin
+    </div>
+    <div class="challenge-box">
+      <span class="challenge-emoji">${card.emoji}</span>
+      <div class="challenge-title">${card.judul}</div>
+      <div class="challenge-desc">${card.deskripsi}</div>
+    </div>
+    <div class="divider"></div>
+    <div class="modal-title" style="font-size:1rem">Siapa yang menang?</div>
+    <div class="winner-grid">
+      <button class="winner-btn" onclick="resolveTantangan(${G.challenger})">
+        <div class="w-avatar" style="background:${c.color}">${c.initial}</div>
+        <div>${c.name}</div>
+        <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
+      </button>
+      <button class="winner-btn" onclick="resolveTantangan(${G.opponent})">
+        <div class="w-avatar" style="background:${o.color}">${o.initial}</div>
+        <div>${o.name}</div>
+        <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
+      </button>
+    </div>`;
+  if (challengeSeconds) startTantanganTimer(challengeSeconds);
+}
+
+function resolveTantangan(winnerIdx) {
+  clearTantanganTimer();
+  const loserIdx = winnerIdx === G.challenger ? G.opponent : G.challenger;
+  const bet = G.betAmount;
+  updateScore(winnerIdx, bet, false);
+  updateScore(loserIdx, -bet, false);
+  playScoreSound(bet);
+  setTimeout(() => playScoreSound(-bet), 260);
+  const w = G.players[winnerIdx];
+  const l = G.players[loserIdx];
+  document.getElementById('tantangan-content').innerHTML = `
+    <div class="modal-tag tag-tantangan">⚔️ Tantangan</div>
+    <div class="modal-title">Hasil Battle!</div>
+    <div class="result-box win">
+      <div class="result-icon">🏆</div>
+      <div class="result-text">
+        <div class="result-label">Pemenang</div>
+        <div class="result-main green">${w.name} +${bet.toLocaleString()} poin</div>
+      </div>
+    </div>
+    <div class="result-box lose">
+      <div class="result-icon">💔</div>
+      <div class="result-text">
+        <div class="result-label">Kekalahan</div>
+        <div class="result-main red">${l.name} −${bet.toLocaleString()} poin</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <button class="btn-action btn-red" onclick="openTantangan()">Battle Lagi</button>
+    <button class="btn-outline" onclick="closeModal('overlay-tantangan')">Tutup</button>`;
+}
+
+function getChallengeSeconds(card) {
+  const match = card.deskripsi.match(/(\d+)\s*detik/i);
+  if (match) return parseInt(match[1], 10);
+  if (card.tipe === 'fisik') return 0;
+  return 30;
+}
+
+function clearTantanganTimer() {
+  clearInterval(G.tantanganTimerId);
+  G.tantanganTimerId = null;
+}
+
+function startTantanganTimer(seconds) {
+  G.tantanganTimeLeft = seconds;
+  updateTantanganTimerDisplay();
+  G.tantanganTimerId = setInterval(() => {
+    G.tantanganTimeLeft--;
+    updateTantanganTimerDisplay();
+    if (G.tantanganTimeLeft <= 0) {
+      clearTantanganTimer();
+      playScoreSound(-1);
+      showToast('Waktu tantangan habis! Pilih pemenang sesuai hasil.');
+    }
+  }, 1000);
+}
+
+function updateTantanganTimerDisplay() {
+  const badge = document.getElementById('tantangan-timer');
+  if (!badge) return;
+  badge.textContent = `⏱ ${G.tantanganTimeLeft} detik`;
+  badge.classList.toggle('warning', G.tantanganTimeLeft <= 5);
+}
+
+/* ================================================
+   KESEMPATAN
+   ================================================ */
+function openKesempatan() {
+  G.kesempatanPlayer = -1;
+  renderKesempatanStep1();
+  openModal('overlay-kesempatan');
+}
+
+function renderKesempatanStep1() {
+  const selGrid = G.players.map((p,i) => `
+    <button class="sel-btn ${G.kesempatanPlayer===i?'active':''}"
+      onclick="G.kesempatanPlayer=${i};renderKesempatanStep1()">
+      <div class="mini-dot" style="background:${p.color}"></div>
+      ${p.name}
+    </button>`).join('');
+
+  document.getElementById('kesempatan-content').innerHTML = `
+    <div class="modal-tag tag-kesempatan">🎴 Kesempatan</div>
+    <div class="modal-title">Siapa yang mengambil kartu?</div>
+    <div class="form-group">
+      <div class="select-grid">${selGrid}</div>
+    </div>
+    <button class="btn-action btn-green"
+      onclick="if(G.kesempatanPlayer<0){showToast('Pilih pemain dulu!')}else{renderKesempatanPlay()}">
+      🎴 Ambil Kartu →
+    </button>`;
+}
+
+function renderKesempatanPlay() {
+  const { card } = getRandomCard(KESEMPATAN_DATA, G.usedKesempatan);
+  G.currentCard = card;
+  const p = G.players[G.kesempatanPlayer];
+  const delta = card.efek.tipe === 'add' ? card.efek.nilai : -card.efek.nilai;
+  updateScore(G.kesempatanPlayer, delta);
+
+  document.getElementById('kesempatan-content').innerHTML = `
+    <div class="modal-tag tag-kesempatan">🎴 Kesempatan</div>
+    <div class="modal-title">Kartu untuk <span style="color:${p.color}">${p.name}</span></div>
+    <div class="ksp-card ${card.warna}">
+      <span class="ksp-icon">${card.emoji}</span>
+      <div class="ksp-title">${card.judul}</div>
+      <div class="ksp-desc">${card.deskripsi}</div>
+    </div>
+    <div class="result-box ${delta>0?'win':'lose'}">
+      <div class="result-icon">${delta>0?'💚':'❤️'}</div>
+      <div class="result-text">
+        <div class="result-label">Efek pada ${p.name}</div>
+        <div class="result-main ${delta>0?'green':'red'}">${delta>0?'+'+delta:'−'+Math.abs(delta)} poin</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <button class="btn-action btn-green" onclick="openKesempatan()">Kartu Lagi</button>
+    <button class="btn-outline" onclick="closeModal('overlay-kesempatan')">Tutup</button>`;
+}
+
+/* ================================================
+   TOAST
+   ================================================ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ================================================
+   INIT
+   ================================================ */
+initSetup();
+</script>
+</body>
+</html>

@@ -984,7 +984,7 @@ function startGame() {
   if (names.length < 2) { showToast('Minimal 2 pemain diperlukan!'); return; }
 
   G.players = names.map((name, i) => ({
-    name, score: 1000, color: getPlayerColor(i),
+    name, score: 100, color: getPlayerColor(i),
     initial: name.charAt(0).toUpperCase()
   }));
   G.usedKuis = [];
@@ -1051,7 +1051,7 @@ function renderLeaderboard() {
   lb.innerHTML += `
     <div class="sidebar-divider"></div>
     <div class="sidebar-footer">
-      <button class="btn-reset" onclick="if(confirm('Reset skor semua pemain?')){G.players.forEach(p=>p.score=1000);renderLeaderboard();showToast('Skor direset!');}">
+      <button class="btn-reset" onclick="if(confirm('Reset skor semua pemain?')){G.players.forEach(p=>p.score=100);renderLeaderboard();showToast('Skor direset!');}">
         🔄 Reset Skor
       </button>
     </div>`;
@@ -1135,7 +1135,7 @@ function openKuis() {
 
 function renderKuisStep1() {
   const available = G.players.map((p,i) => ({...p, idx:i}));
-  const ptOptions = Array.from({ length: 14 }, (_, i) => (i + 1) * 5);
+  const ptOptions = Array.from({ length: 4 }, (_, i) => (i + 1) * 5);
   let selGridHTML = available.map(p => `
     <button class="sel-btn ${G.activePlayer===p.idx?'active':''}"
       onclick="G.activePlayer=${p.idx};renderKuisStep1()">

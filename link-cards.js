@@ -795,7 +795,7 @@ const TANTANGAN_DATA = [
   {
     emoji: '🥦',
     judul: 'Si Raja Buah & Sayur',
-    deskripsi: 'Siapa yang paling banyak menyebutkan nama buah atau sayuran yang baik tubuh? Waktu 30 detik, tidak boleh mengulang!',
+    deskripsi: 'Siapa yang paling banyak menyebutkan nama buah yang baik tubuh? Waktu 30 detik!',
     tipe: 'kecepatan'
   },
   {
@@ -811,13 +811,13 @@ const TANTANGAN_DATA = [
     tipe: 'kecepatan'
   },
   {
-    emoji: '🐟'
+    emoji: '🐟',
     judul: 'Hewan Air Sprint!',
     deskripsi: 'Siapa yang lebih dulu menyebutkan 5 hewan yang hidup di air dengan benar? Waktu 30 detik, silakan mulai!',
     tipe: 'kecepatan',
   },
   {
-    emoji: '📚,
+    emoji: '📚',
     judul: 'Benda di Kelas Sprint!',
     deskripsi: 'Pemain tercepat yang bisa menyebutkan 5 benda yang biasa ada di kelas akan menang! Waktu 30 detik, silakan mulai!',
     tipe: 'kecepatan',
@@ -835,16 +835,16 @@ const TANTANGAN_DATA = [
     tipe: 'kecepatan'
   },
   {
-    emoji: '🐄'
+    emoji: '🐄',
     judul: 'Hewan Berkaki Empat Sprint!',
     deskripsi: 'Siapa yang tercepat menyebutkan 5 hewan berkaki empat akan menjadi pemenangnya! Waktu 30 detik, silakan mulai!',
     tipe: 'kecepatan',
   },
   {
+    emoji: '🧽',
     judul: 'Alat Kebersihan Sprint!',
-    deskripsi: 'Siapa yang tercepat menyebutkan 5 alat kebersihan dengan benar akan menang! Waktu 30 detik, silakan mulai!',
+    deskripsi: 'Siapa yang tercepat menyebutkan 3 alat kebersihan dengan benar akan menang! Waktu 30 detik, silakan mulai!',
     tipe: 'kecepatan',
-    emoji: '🧽'
   },
   {
     emoji: '🦷',
@@ -852,6 +852,18 @@ const TANTANGAN_DATA = [
     deskripsi: 'Sebutkan makanan atau minuman yang bisa merusak gigi! Waktu 20 detik.',
     tipe: 'kecepatan'
   },
+  {
+    emoji: '💧',
+    judul: 'Organ Tubuh',
+    deskripsi: 'Sebutkan organ tubuh yang ada di dalam tubuh manusia!',
+    tipe: 'kecepatan'
+  },
+  {
+    emoji: '🦠',
+    judul: 'Penyakit',
+    deskripsi: 'Sebutkan penyakit yang biasanya dialami manusia! Waktu 30 detik.',
+    tipe: 'kecepatan'
+  }
 ];
 
 const KESEMPATAN_DATA = [

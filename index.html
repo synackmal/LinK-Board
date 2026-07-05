@@ -106,12 +106,6 @@ input  { font-family: inherit; }
   gap: 0.75rem;
 }
 
-.dot {
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
 .player-row input {
   flex: 1;
   padding: 0.6rem 0.9rem;
@@ -210,7 +204,9 @@ input  { font-family: inherit; }
 .lb-avatar {
   width: 34px; height: 34px;
   border-radius: 50%;
-  color: white;
+  color: var(--text);
+  background: #F3F4F6;
+  border: 1.5px solid var(--border);
   font-weight: 800;
   font-size: 0.85rem;
   display: flex; align-items: center; justify-content: center;
@@ -246,6 +242,13 @@ input  { font-family: inherit; }
   transition: border-color .15s, color .15s, background .15s;
 }
 .score-edit-btn:hover { border-color: var(--kuis); color: var(--kuis); background: var(--kuis-bg); }
+
+.start-bonus-btn {
+  width: auto;
+  min-width: 38px;
+  padding: 0 0.35rem;
+}
+.start-bonus-btn:hover { border-color: var(--kesempatan); color: var(--kesempatan); background: var(--ksp-bg); }
 
 .score-edit-row {
   display: flex;
@@ -295,6 +298,19 @@ input  { font-family: inherit; }
   transition: color .2s, border-color .2s;
 }
 .btn-reset:hover { color: var(--tantangan); border-color: var(--tantangan); }
+
+.btn-quit {
+  width: 100%;
+  padding: 0.5rem;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: color .2s, border-color .2s;
+  margin-top: 0.5rem;
+}
+.btn-quit:hover { color: var(--tantangan); border-color: var(--tantangan); }
 
 /* --- Main area --- */
 .main-area {
@@ -485,28 +501,18 @@ input  { font-family: inherit; }
 .sel-btn:hover   { border-color: #9CA3AF; background: white; }
 .sel-btn.active  { border-color: #059669; background: var(--ksp-bg); color: #059669; }
 .sel-btn .mini-dot {
-  width: 10px; height: 10px;
+  width: 22px; height: 22px;
   border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: #F3F4F6;
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
-
-.point-grid {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.pt-btn {
-  padding: 0.5rem 1.1rem;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  background: #FAFAFA;
-  transition: all .15s;
-}
-.pt-btn:hover  { border-color: #9CA3AF; background: white; }
-.pt-btn.active { border-color: var(--kuis); background: var(--kuis-bg); color: var(--kuis); }
 
 .bet-input {
   width: 100%;
@@ -677,7 +683,9 @@ input  { font-family: inherit; }
 .vs-avatar {
   width: 44px; height: 44px;
   border-radius: 50%;
-  color: white;
+  color: var(--text);
+  background: #F3F4F6;
+  border: 1.5px solid var(--border);
   font-weight: 800;
   font-size: 1.1rem;
   display: flex; align-items: center; justify-content: center;
@@ -707,7 +715,9 @@ input  { font-family: inherit; }
 .winner-btn .w-avatar {
   width: 40px; height: 40px;
   border-radius: 50%;
-  color: white;
+  color: var(--text);
+  background: #F3F4F6;
+  border: 1.5px solid var(--border);
   font-weight: 800;
   display: flex; align-items: center; justify-content: center;
 }
@@ -819,8 +829,10 @@ input  { font-family: inherit; }
 @media (max-width: 768px) {
   #screen-game { flex-direction: column; }
   .sidebar { width: 100%; min-height: auto; height: auto; flex-direction: row; flex-wrap: wrap; position: static; border-right: none; border-bottom: 1.5px solid var(--border); }
-  .sidebar-title, .sidebar-divider, .sidebar-footer { display: none; }
+  .sidebar-title, .sidebar-divider { display: none; }
+  .sidebar-footer { width: 100%; padding-top: 0.5rem; }
   .lb-card { flex-direction: column; text-align: center; font-size: 0.8rem; min-width: 80px; }
+  .lb-actions { justify-content: center; flex-wrap: wrap; }
   .card-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -909,11 +921,6 @@ input  { font-family: inherit; }
 <script src="link-cards.js"></script>
 <script>
 /* ================================================
-   WARNA PEMAIN
-   ================================================ */
-const PLAYER_COLORS = ['#EF4444','#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899','#14B8A6','#F97316','#6366F1','#84CC16','#06B6D4','#D946EF'];
-
-/* ================================================
    STATE GLOBAL
    ================================================ */
 let G = {
@@ -948,19 +955,12 @@ const INPUT_PLACEHOLDER = [
 ];
 let playerInputCount = 0;
 
-function getPlayerColor(index) {
-  if (PLAYER_COLORS[index]) return PLAYER_COLORS[index];
-  const hue = (index * 47) % 360;
-  return `hsl(${hue}, 72%, 48%)`;
-}
-
 function addPlayerInput() {
   const rows = document.getElementById('player-rows');
   const i = playerInputCount;
   const placeholder = INPUT_PLACEHOLDER[i] || `Nama Pemain ${i + 1} (opsional)`;
   rows.innerHTML += `
     <div class="player-row">
-      <div class="dot" style="background:${getPlayerColor(i)}"></div>
       <input id="p${i}" type="text" placeholder="${placeholder}" maxlength="20"
         ${i < 2 ? 'required' : ''} />
     </div>`;
@@ -984,7 +984,7 @@ function startGame() {
   if (names.length < 2) { showToast('Minimal 2 pemain diperlukan!'); return; }
 
   G.players = names.map((name, i) => ({
-    name, score: 100, color: getPlayerColor(i),
+    name, score: 100,
     initial: name.charAt(0).toUpperCase()
   }));
   G.usedKuis = [];
@@ -1014,6 +1014,21 @@ function closeModal(id) {
   clearTantanganTimer();
 }
 
+function quitGame() {
+  if (!confirm('Keluar dari game? Skor dan progress permainan saat ini akan hilang.')) return;
+  clearKuisTimer();
+  clearTantanganTimer();
+  G.players = [];
+  G.editingScore = -1;
+  G.usedKuis = [];
+  G.usedTantangan = [];
+  G.usedKesempatan = [];
+  document.querySelectorAll('.overlay').forEach(overlay => overlay.classList.remove('show'));
+  initSetup();
+  switchScreen('screen-setup');
+  showToast('Game ditutup.');
+}
+
 /* ================================================
    LEADERBOARD
    ================================================ */
@@ -1028,7 +1043,7 @@ function renderLeaderboard() {
     const isEditing = G.editingScore === p.idx;
     lb.innerHTML += `
       <div class="lb-card ${i===0?'first-place':''}">
-        <div class="lb-avatar" style="background:${p.color}">${p.initial}</div>
+        <div class="lb-avatar">${p.initial}</div>
         <div class="lb-info">
           <div class="lb-name">${p.name}</div>
           ${isEditing ? `
@@ -1044,6 +1059,8 @@ function renderLeaderboard() {
         <div class="lb-actions">
           <button class="score-edit-btn" title="Edit skor ${p.name}"
             onclick="toggleScoreEdit(${p.idx})">${isEditing ? '✕' : '✎'}</button>
+          <button class="score-edit-btn start-bonus-btn" title="${p.name} lewat START (+10)"
+            onclick="addStartBonus(${p.idx})">+10</button>
           <div class="lb-rank">${ranks[i] || i + 1}</div>
         </div>
       </div>`;
@@ -1054,6 +1071,7 @@ function renderLeaderboard() {
       <button class="btn-reset" onclick="if(confirm('Reset skor semua pemain?')){G.players.forEach(p=>p.score=100);renderLeaderboard();showToast('Skor direset!');}">
         🔄 Reset Skor
       </button>
+      <button class="btn-quit" onclick="quitGame()">Keluar Game</button>
     </div>`;
 }
 
@@ -1085,6 +1103,11 @@ function updateScore(playerIdx, delta, withSound = true) {
   G.players[playerIdx].score += delta;
   renderLeaderboard();
   if (withSound && delta !== 0) playScoreSound(delta);
+}
+
+function addStartBonus(playerIdx) {
+  updateScore(playerIdx, 10);
+  showToast(`${G.players[playerIdx].name} lewat START: +10 poin!`);
 }
 
 let audioCtx;
@@ -1133,20 +1156,18 @@ function openKuis() {
   openModal('overlay-kuis');
 }
 
+function getRandomQuizPoint() {
+  const values = [5, 10, 15, 20];
+  return values[Math.floor(Math.random() * values.length)];
+}
+
 function renderKuisStep1() {
   const available = G.players.map((p,i) => ({...p, idx:i}));
-  const ptOptions = Array.from({ length: 4 }, (_, i) => (i + 1) * 5);
   let selGridHTML = available.map(p => `
     <button class="sel-btn ${G.activePlayer===p.idx?'active':''}"
       onclick="G.activePlayer=${p.idx};renderKuisStep1()">
-      <div class="mini-dot" style="background:${p.color}"></div>
+      <div class="mini-dot">${p.initial}</div>
       ${p.name}
-    </button>`).join('');
-
-  let ptGridHTML = ptOptions.map(pt => `
-    <button class="pt-btn ${G.pointValue===pt?'active':''}"
-      onclick="G.pointValue=${pt};renderKuisStep1()">
-      ${pt} pts
     </button>`).join('');
 
   document.getElementById('kuis-content').innerHTML = `
@@ -1155,10 +1176,6 @@ function renderKuisStep1() {
     <div class="form-group">
       <label class="form-label">Pilih Pemain</label>
       <div class="select-grid">${selGridHTML}</div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Poin di Kotak (sesuai papan fisik)</label>
-      <div class="point-grid">${ptGridHTML}</div>
     </div>
     <button class="btn-action btn-blue"
       onclick="if(G.activePlayer<0){showToast('Pilih pemain dulu!')}else{renderKuisPlay()}">
@@ -1177,6 +1194,7 @@ function getRandomCard(data, used) {
 function renderKuisPlay() {
   clearKuisTimer();
   const { card } = getRandomCard(KUIS_DATA, G.usedKuis);
+  G.pointValue = getRandomQuizPoint();
   G.currentCard = card;
   G.answered = false;
   const p = G.players[G.activePlayer];
@@ -1221,11 +1239,11 @@ function renderKuisPlay() {
 
   document.getElementById('kuis-content').innerHTML = `
     <div class="modal-tag tag-kuis">🧠 Kuis</div>
-    <div class="modal-title">Soal untuk <span style="color:${p.color}">${p.name}</span></div>
+    <div class="modal-title">Soal untuk ${p.name}</div>
     <div class="timer-row">
       <span class="timer-badge" id="kuis-timer">⏱ 20 detik</span>
     </div>
-    <div class="point-stake">💰 Taruhan: ${G.pointValue} poin</div>
+    <div class="point-stake">Poin acak: ${G.pointValue} poin</div>
     ${contentHTML}`;
   startKuisTimer();
 }
@@ -1341,7 +1359,7 @@ function renderTantanganStep1() {
   const selGrid = (key) => G.players.map((p,i) => `
     <button class="sel-btn ${G[key]===i?'active':''}"
       onclick="G.${key}=${i};renderTantanganStep1()">
-      <div class="mini-dot" style="background:${p.color}"></div>
+      <div class="mini-dot">${p.initial}</div>
       ${p.name}
     </button>`).join('');
 
@@ -1391,13 +1409,13 @@ function renderTantanganPlay() {
     ` : ''}
     <div class="vs-row">
       <div class="vs-player">
-        <div class="vs-avatar" style="background:${c.color}">${c.initial}</div>
+        <div class="vs-avatar">${c.initial}</div>
         <div class="vs-name">${c.name}</div>
         <div class="vs-score">${c.score.toLocaleString()} poin</div>
       </div>
       <div class="vs-text">VS</div>
       <div class="vs-player">
-        <div class="vs-avatar" style="background:${o.color}">${o.initial}</div>
+        <div class="vs-avatar">${o.initial}</div>
         <div class="vs-name">${o.name}</div>
         <div class="vs-score">${o.score.toLocaleString()} poin</div>
       </div>
@@ -1414,12 +1432,12 @@ function renderTantanganPlay() {
     <div class="modal-title" style="font-size:1rem">Siapa yang menang?</div>
     <div class="winner-grid">
       <button class="winner-btn" onclick="resolveTantangan(${G.challenger})">
-        <div class="w-avatar" style="background:${c.color}">${c.initial}</div>
+        <div class="w-avatar">${c.initial}</div>
         <div>${c.name}</div>
         <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
       </button>
       <button class="winner-btn" onclick="resolveTantangan(${G.opponent})">
-        <div class="w-avatar" style="background:${o.color}">${o.initial}</div>
+        <div class="w-avatar">${o.initial}</div>
         <div>${o.name}</div>
         <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
       </button>
@@ -1505,7 +1523,7 @@ function renderKesempatanStep1() {
   const selGrid = G.players.map((p,i) => `
     <button class="sel-btn ${G.kesempatanPlayer===i?'active':''}"
       onclick="G.kesempatanPlayer=${i};renderKesempatanStep1()">
-      <div class="mini-dot" style="background:${p.color}"></div>
+      <div class="mini-dot">${p.initial}</div>
       ${p.name}
     </button>`).join('');
 
@@ -1530,7 +1548,7 @@ function renderKesempatanPlay() {
 
   document.getElementById('kesempatan-content').innerHTML = `
     <div class="modal-tag tag-kesempatan">🎴 Kesempatan</div>
-    <div class="modal-title">Kartu untuk <span style="color:${p.color}">${p.name}</span></div>
+    <div class="modal-title">Kartu untuk ${p.name}</div>
     <div class="ksp-card ${card.warna}">
       <span class="ksp-icon">${card.emoji}</span>
       <div class="ksp-title">${card.judul}</div>
@@ -1559,6 +1577,13 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
 }
+
+window.addEventListener('beforeunload', (event) => {
+  const isGameActive = document.getElementById('screen-game').classList.contains('active') && G.players.length > 0;
+  if (!isGameActive) return;
+  event.preventDefault();
+  event.returnValue = '';
+});
 
 /* ================================================
    INIT

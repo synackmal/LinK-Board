@@ -16,6 +16,406 @@ const KUIS_DATA = [
   {
     type: 'pilgan',
     kategori: 'Lingkungan 🌍',
+    soal: 'Sampah sebaiknya dibuang ke...',
+    opsi: ['Sungai', 'Tempat sampah', 'Selokan', 'Laut'],
+    jawaban: 1,
+    fakta: 'Membuang sampah pada tempatnya mencegah pencemaran dan menjaga kebersihan lingkungan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Ikan bernapas menggunakan...',
+    opsi: ['Paru-paru', 'Hidung', 'Insang', 'Kulit'],
+    jawaban: 2,
+    fakta: 'Insang menyerap oksigen yang terlarut di dalam air untuk pernapasan ikan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Menanam pohon dapat membuat lingkungan menjadi...',
+    opsi: ['Panas', 'Gersang', 'Sejuk', 'Kotor'],
+    jawaban: 2,
+    fakta: 'Pohon menyerap panas dan menghasilkan oksigen sehingga udara menjadi lebih sejuk.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Jika selesai menggunakan air, kita harus...',
+    opsi: ['Membiarkan keran terbuka', 'Menutup keran', 'Membuka keran lebih besar', 'Mengalirkan air terus'],
+    jawaban: 1,
+    fakta: 'Menutup keran setelah digunakan membantu menghemat air bersih.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Contoh ikan air tawar adalah...',
+    opsi: ['Tuna', 'Lele', 'Kakap', 'Tongkol'],
+    jawaban: 1,
+    fakta: 'Lele hidup dan berkembang biak di perairan tawar seperti sungai, kolam, dan danau.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Udara bersih baik untuk...',
+    opsi: ['Kesehatan', 'Sampah', 'Polusi', 'Banjir'],
+    jawaban: 0,
+    fakta: 'Udara bersih mengandung oksigen yang cukup dan minim polutan sehingga baik bagi kesehatan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Kegiatan yang menjaga kebersihan sekolah adalah...',
+    opsi: ['Membuang sampah sembarangan', 'Piket kelas', 'Mencoret tembok', 'Mengotori halaman'],
+    jawaban: 1,
+    fakta: 'Piket kelas adalah kegiatan rutin membersihkan ruang kelas secara bergiliran.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Terumbu karang berfungsi sebagai...',
+    opsi: ['Rumah ikan', 'Jalan kapal', 'Tempat parkir', 'Bendungan'],
+    jawaban: 0,
+    fakta: 'Terumbu karang menjadi habitat dan tempat berlindung bagi banyak spesies ikan laut.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Sampah daun termasuk sampah...',
+    opsi: ['Anorganik', 'Organik', 'Elektronik', 'Kaca'],
+    jawaban: 1,
+    fakta: 'Sampah organik seperti daun dapat terurai secara alami dan dijadikan kompos.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Menghemat listrik dapat dilakukan dengan...',
+    opsi: ['Menyalakan TV seharian', 'Menyalakan lampu siang hari', 'Mematikan alat yang tidak digunakan', 'Membuka kulkas terus-menerus'],
+    jawaban: 2,
+    fakta: 'Mematikan alat elektronik yang tidak dipakai mengurangi pemborosan energi listrik.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Pohon menghasilkan...',
+    opsi: ['Debu', 'Asap', 'Oksigen', 'Sampah'],
+    jawaban: 2,
+    fakta: 'Melalui fotosintesis, pohon melepaskan oksigen yang dibutuhkan makhluk hidup.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Hutan mangrove banyak ditemukan di daerah...',
+    opsi: ['Pegunungan', 'Pantai', 'Gurun', 'Sawah'],
+    jawaban: 1,
+    fakta: 'Hutan mangrove tumbuh di daerah pesisir pantai yang terkena pasang surut air laut.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Air bersih penting untuk...',
+    opsi: ['Polusi', 'Penyakit', 'Kesehatan', 'Sampah'],
+    jawaban: 2,
+    fakta: 'Air bersih diperlukan untuk minum, memasak, dan menjaga kesehatan tubuh.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Apa manfaat utama daur ulang?',
+    opsi: ['Menambah sampah', 'Mengurangi jumlah sampah', 'Menambah polusi', 'Menambah limbah'],
+    jawaban: 1,
+    fakta: 'Daur ulang mengubah sampah menjadi barang baru sehingga mengurangi timbunan sampah.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Gerakan Gemar Makan Ikan bertujuan...',
+    opsi: ['Menambah sampah', 'Menyehatkan masyarakat', 'Mengurangi belajar', 'Mengurangi olahraga'],
+    jawaban: 1,
+    fakta: 'Ikan kaya protein dan gizi yang baik untuk kesehatan dan pertumbuhan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Saat hujan turun, kita dapat menggunakan...',
+    opsi: ['Helm', 'Kipas', 'Payung', 'Tas'],
+    jawaban: 2,
+    fakta: 'Payung melindungi tubuh kita agar tidak basah saat hujan turun.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Jika menemukan sampah di halaman sekolah, sebaiknya...',
+    opsi: ['Dibiarkan', 'Ditendang', 'Dipungut dan dibuang', 'Disimpan di meja'],
+    jawaban: 2,
+    fakta: 'Memungut sampah dan membuangnya pada tempatnya menjaga kebersihan sekolah.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Aquaponik adalah gabungan antara...',
+    opsi: ['Budidaya ikan dan tanaman', 'Peternakan dan sawah', 'Kehutanan dan peternakan', 'Tambang dan pertanian'],
+    jawaban: 0,
+    fakta: 'Aquaponik memanfaatkan kotoran ikan sebagai nutrisi bagi tanaman yang ditanam bersamanya.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Contoh sampah anorganik adalah...',
+    opsi: ['Daun', 'Kulit buah', 'Botol plastik', 'Rumput'],
+    jawaban: 2,
+    fakta: 'Botol plastik sulit terurai secara alami dan termasuk sampah anorganik.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Lingkungan yang bersih membuat kita merasa...',
+    opsi: ['Nyaman', 'Takut', 'Marah', 'Bingung'],
+    jawaban: 0,
+    fakta: 'Lingkungan bersih memberikan rasa nyaman dan mendukung kesehatan penghuninya.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Mengapa kita harus menghemat air?',
+    opsi: ['Agar air tidak cepat habis', 'Agar banjir', 'Agar keran rusak', 'Agar air kotor'],
+    jawaban: 0,
+    fakta: 'Air bersih terbatas jumlahnya sehingga perlu digunakan secara bijak.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Plankton merupakan...',
+    opsi: ['Sampah laut', 'Hewan darat', 'Organisme kecil yang menjadi makanan ikan', 'Tumbuhan gurun'],
+    jawaban: 2,
+    fakta: 'Plankton adalah organisme mikroskopis di air yang menjadi sumber makanan utama banyak ikan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Polusi udara dapat berasal dari...',
+    opsi: ['Pohon', 'Rumput', 'Asap kendaraan', 'Bunga'],
+    jawaban: 2,
+    fakta: 'Asap kendaraan bermotor mengandung zat berbahaya yang mencemari udara.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Membuang sampah ke selokan dapat menyebabkan...',
+    opsi: ['Pelangi', 'Banjir', 'Udara bersih', 'Pohon tumbuh'],
+    jawaban: 1,
+    fakta: 'Sampah yang menyumbat selokan menghambat aliran air dan menyebabkan banjir.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Sungai yang bersih membuat ikan...',
+    opsi: ['Mati', 'Hilang', 'Sehat', 'Takut'],
+    jawaban: 2,
+    fakta: 'Air sungai yang bersih menyediakan oksigen dan habitat yang baik bagi ikan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Apa kepanjangan dari 3R?',
+    opsi: ['Read, Run, Rest', 'Reduce, Reuse, Recycle', 'Reduce, Rest, Repeat', 'Reuse, Run, Read'],
+    jawaban: 1,
+    fakta: 'Reduce, Reuse, Recycle adalah prinsip mengurangi, memakai ulang, dan mendaur ulang sampah.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Tumbuhan membutuhkan ... untuk tumbuh.',
+    opsi: ['Mainan', 'Televisi', 'Cahaya matahari', 'Sepeda'],
+    jawaban: 2,
+    fakta: 'Cahaya matahari diperlukan tumbuhan untuk proses fotosintesis.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Menangkap ikan dengan racun dapat...',
+    opsi: ['Menjaga lingkungan', 'Merusak ekosistem', 'Menambah ikan', 'Membersihkan laut'],
+    jawaban: 1,
+    fakta: 'Racun mencemari air dan membunuh biota laut secara tidak terkendali, merusak ekosistem.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Kegiatan gotong royong bertujuan untuk...',
+    opsi: ['Mengotori lingkungan', 'Membersihkan lingkungan bersama', 'Bermain sepanjang hari', 'Membuat sampah'],
+    jawaban: 1,
+    fakta: 'Gotong royong adalah kerja sama warga untuk membersihkan dan merawat lingkungan bersama.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Reduce berarti...',
+    opsi: ['Mengurangi sampah', 'Menambah sampah', 'Membakar sampah', 'Menyimpan sampah'],
+    jawaban: 0,
+    fakta: 'Reduce berarti mengurangi penggunaan barang yang berpotensi menjadi sampah.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Kendaraan yang tidak menghasilkan asap adalah...',
+    opsi: ['Motor', 'Mobil', 'Truk', 'Sepeda'],
+    jawaban: 3,
+    fakta: 'Sepeda digerakkan dengan tenaga manusia sehingga tidak menghasilkan emisi gas buang.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Jika banyak ikan mati di sungai, kemungkinan penyebabnya adalah...',
+    opsi: ['Air tercemar', 'Banyak tanaman', 'Air terlalu bersih', 'Banyak awan'],
+    jawaban: 0,
+    fakta: 'Pencemaran air mengurangi kadar oksigen dan meracuni ikan hingga menyebabkan kematian.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Kompos dibuat dari...',
+    opsi: ['Plastik', 'Besi', 'Sampah organik', 'Kaca'],
+    jawaban: 2,
+    fakta: 'Kompos dihasilkan dari pembusukan sampah organik seperti sisa makanan dan daun.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Membawa tumbler dapat membantu mengurangi...',
+    opsi: ['Sampah plastik', 'Oksigen', 'Pohon', 'Air hujan'],
+    jawaban: 0,
+    fakta: 'Menggunakan tumbler mengurangi kebutuhan botol plastik sekali pakai.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Terumbu karang yang rusak dapat menyebabkan...',
+    opsi: ['Habitat ikan berkurang', 'Jumlah ikan bertambah', 'Air menjadi tawar', 'Laut menjadi dangkal'],
+    jawaban: 0,
+    fakta: 'Kerusakan terumbu karang menghilangkan tempat tinggal dan berkembang biak banyak ikan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Apa manfaat utama menjaga lingkungan tetap bersih?',
+    opsi: ['Menjaga kesehatan dan kenyamanan', 'Menambah sampah', 'Menambah penyakit', 'Menambah polusi'],
+    jawaban: 0,
+    fakta: 'Lingkungan bersih mengurangi risiko penyakit dan membuat hidup lebih nyaman.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Salah satu manfaat kolam budidaya ikan adalah...',
+    opsi: ['Menambah sampah', 'Menghasilkan ikan untuk konsumsi', 'Mengurangi air bersih', 'Merusak lingkungan'],
+    jawaban: 1,
+    fakta: 'Budidaya ikan di kolam menyediakan sumber pangan protein bagi masyarakat.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Mengapa penggunaan plastik sekali pakai perlu dikurangi?',
+    opsi: ['Sulit terurai', 'Mudah hilang', 'Menambah oksigen', 'Menyuburkan tanah'],
+    jawaban: 0,
+    fakta: 'Plastik membutuhkan waktu ratusan tahun untuk terurai secara alami di lingkungan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Membersihkan lingkungan dapat mencegah...',
+    opsi: ['Penyakit', 'Pelangi', 'Angin', 'Awan'],
+    jawaban: 0,
+    fakta: 'Lingkungan yang bersih mengurangi tempat berkembangnya kuman dan sumber penyakit.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Menangkap ikan yang masih kecil dapat menyebabkan...',
+    opsi: ['Populasi ikan berkurang', 'Populasi ikan bertambah', 'Laut lebih luas', 'Air lebih jernih'],
+    jawaban: 0,
+    fakta: 'Ikan kecil belum sempat berkembang biak, sehingga populasi ikan bisa menurun drastis.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Apa manfaat biopori?',
+    opsi: ['Menambah sampah', 'Membantu penyerapan air hujan', 'Mengurangi oksigen', 'Mengeringkan tanaman'],
+    jawaban: 1,
+    fakta: 'Lubang biopori membantu air hujan meresap ke tanah dan mencegah genangan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Hewan yang hidup di kolam adalah...',
+    opsi: ['Kucing', 'Elang', 'Lele', 'Kambing'],
+    jawaban: 2,
+    fakta: 'Lele adalah salah satu ikan yang umum dibudidayakan di kolam.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Apa yang terjadi jika pohon terus ditebang?',
+    opsi: ['Lingkungan lebih panas', 'Udara lebih segar', 'Sungai lebih bersih', 'Hujan lebih banyak'],
+    jawaban: 0,
+    fakta: 'Berkurangnya pohon mengurangi penyerapan panas dan menyebabkan suhu lingkungan meningkat.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Salah satu upaya menjaga kelestarian sumber daya ikan adalah...',
+    opsi: ['Menggunakan bom ikan', 'Menangkap semua ikan', 'Menangkap ikan sesuai aturan', 'Menangkap ikan kecil sebanyak mungkin'],
+    jawaban: 2,
+    fakta: 'Menangkap ikan sesuai aturan menjaga populasi ikan agar tetap lestari.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Recycle berarti...',
+    opsi: ['Menyimpan barang', 'Mendaur ulang', 'Membakar barang', 'Menjual barang'],
+    jawaban: 1,
+    fakta: 'Recycle adalah proses mengolah kembali sampah menjadi barang yang bermanfaat.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Mengapa kita tidak boleh membuang sampah ke sungai?',
+    opsi: ['Dapat mencemari air dan menyebabkan banjir', 'Membuat sungai lebih bersih', 'Menambah ikan', 'Menambah air'],
+    jawaban: 0,
+    fakta: 'Sampah di sungai mencemari air dan dapat menyumbat aliran hingga menyebabkan banjir.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Hutan mangrove membantu melindungi pantai dari...',
+    opsi: ['Abrasi', 'Kabut', 'Pelangi', 'Hujan'],
+    jawaban: 0,
+    fakta: 'Akar pohon mangrove menahan tanah pantai sehingga mengurangi pengikisan oleh ombak (abrasi).'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Apa manfaat taman kota?',
+    opsi: ['Tempat rekreasi dan penghijauan', 'Tempat sampah', 'Tempat pembakaran', 'Tempat parkir'],
+    jawaban: 0,
+    fakta: 'Taman kota menyediakan ruang hijau dan tempat rekreasi bagi warga.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Mengapa kita perlu menjaga sungai dan laut tetap bersih?',
+    opsi: ['Agar ekosistem tetap sehat', 'Agar ikan sulit hidup', 'Agar air keruh', 'Agar sampah bertambah'],
+    jawaban: 0,
+    fakta: 'Sungai dan laut yang bersih menjaga keseimbangan ekosistem dan kehidupan biota air.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
+    soal: 'Siapa yang bertanggung jawab menjaga lingkungan?',
+    opsi: ['Guru saja', 'Orang tua saja', 'Pemerintah saja', 'Semua orang'],
+    jawaban: 3,
+    fakta: 'Menjaga lingkungan adalah tanggung jawab bersama seluruh anggota masyarakat.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Lingkungan 🌍',
     soal: 'Berapa lama waktu rata-rata yang dibutuhkan botol plastik untuk terurai di alam?',
     opsi: ['10–50 tahun', '100–200 tahun', '400–500 tahun', '1.000+ tahun'],
     jawaban: 2,

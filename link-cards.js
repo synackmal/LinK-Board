@@ -440,6 +440,286 @@ const KUIS_DATA = [
   {
     type: 'pilgan',
     kategori: 'Kesehatan 💊',
+    soal: 'Kita harus mencuci tangan menggunakan...',
+    opsi: ['Sabun dan air', 'Air saja', 'Minyak', 'Pasir'],
+    jawaban: 0,
+    fakta: 'Mencuci tangan dengan sabun dan air efektif membunuh kuman penyebab penyakit.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Berapa kali sebaiknya kita menggosok gigi dalam sehari?',
+    opsi: ['1 kali', '2 kali', '5 kali', 'Tidak perlu'],
+    jawaban: 1,
+    fakta: 'Menyikat gigi minimal 2 kali sehari membantu mencegah gigi berlubang.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Makanan yang baik untuk tubuh disebut makanan...',
+    opsi: ['Cepat saji', 'Pedas', 'Bergizi', 'Manis'],
+    jawaban: 2,
+    fakta: 'Makanan bergizi mengandung zat yang dibutuhkan tubuh untuk tumbuh dan sehat.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Sebelum makan, sebaiknya kita...',
+    opsi: ['Bermain dulu', 'Tidur', 'Berlari', 'Mencuci tangan'],
+    jawaban: 3,
+    fakta: 'Mencuci tangan sebelum makan mencegah masuknya kuman ke tubuh.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Olahraga membuat tubuh menjadi...',
+    opsi: ['Sehat dan kuat', 'Lemas', 'Sakit', 'Malas'],
+    jawaban: 0,
+    fakta: 'Olahraga meningkatkan kebugaran dan daya tahan tubuh.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Sayur dan buah banyak mengandung...',
+    opsi: ['Gula', 'Vitamin', 'Minyak', 'Garam'],
+    jawaban: 1,
+    fakta: 'Vitamin penting untuk menjaga sistem imun dan kesehatan tubuh.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Kita tidur malam sebaiknya selama...',
+    opsi: ['1 jam', '20 jam', '8–10 jam', 'Tidak tidur'],
+    jawaban: 2,
+    fakta: 'Anak-anak membutuhkan sekitar 8–10 jam tidur untuk pertumbuhan optimal.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Sampah sebaiknya dibuang di...',
+    opsi: ['Sungai', 'Jalan', 'Lantai kelas', 'Tempat sampah'],
+    jawaban: 3,
+    fakta: 'Membuang sampah pada tempatnya menjaga kebersihan lingkungan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Air putih penting karena membuat kita tidak...',
+    opsi: ['Dehidrasi', 'Pintar', 'Mengantuk', 'Bosan'],
+    jawaban: 0,
+    fakta: 'Air mencegah dehidrasi dan membantu fungsi tubuh berjalan baik.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Vitamin C banyak terdapat pada buah...',
+    opsi: ['Kentang', 'Jeruk', 'Nasi', 'Daging'],
+    jawaban: 1,
+    fakta: 'Jeruk kaya vitamin C yang membantu meningkatkan imun tubuh.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Agar tidak sakit gigi, kita harus mengurangi makan...',
+    opsi: ['Sayur', 'Permen dan cokelat', 'Buah', 'Ikan'],
+    jawaban: 1,
+    fakta: 'Makanan manis dapat menyebabkan gigi berlubang jika berlebihan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Kuku panjang dan kotor dapat menyimpan...',
+    opsi: ['Vitamin', 'Udara', 'Kuman', 'Air'],
+    jawaban: 2,
+    fakta: 'Kuku kotor bisa menjadi tempat berkembangnya bakteri.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Sebelum tidur, sebaiknya kita...',
+    opsi: ['Menggosok gigi', 'Makan permen', 'Bermain HP', 'Lari-lari'],
+    jawaban: 0,
+    fakta: 'Menyikat gigi sebelum tidur mencegah kerusakan gigi.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Tubuh sehat membuat kita bisa...',
+    opsi: ['Sering sakit', 'Belajar dengan baik', 'Lemas', 'Malas'],
+    jawaban: 1,
+    fakta: 'Tubuh sehat meningkatkan konsentrasi dan produktivitas belajar.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Mandi sebaiknya dilakukan...',
+    opsi: ['1 minggu sekali', 'Tidak perlu', '2 kali sehari', 'Sebulan sekali'],
+    jawaban: 2,
+    fakta: 'Mandi 2 kali sehari menjaga kebersihan kulit dan tubuh.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Saat batuk/bersin sebaiknya...',
+    opsi: ['Tidak ditutup', 'Siku atau tisu', 'Tangan kotor', 'Baju orang lain'],
+    jawaban: 1,
+    fakta: 'Menutup dengan siku/tisu mencegah penyebaran virus.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Susu mengandung...',
+    opsi: ['Kalsium', 'Garam', 'Pewarna', 'Pengawet'],
+    jawaban: 0,
+    fakta: 'Kalsium penting untuk kesehatan tulang dan gigi.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Olahraga pagi yang mudah adalah...',
+    opsi: ['Tidur', 'Menonton TV', 'Senam/jalan kaki', 'Bermain HP'],
+    jawaban: 2,
+    fakta: 'Aktivitas ringan seperti jalan kaki baik untuk kesehatan jantung.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Makanan tidak tertutup sebaiknya...',
+    opsi: ['Dimakan', 'Dihindari', 'Dibeli', 'Dibagikan'],
+    jawaban: 1,
+    fakta: 'Makanan terbuka mudah terkontaminasi kuman.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Telinga dibersihkan dengan...',
+    opsi: ['Pensil', 'Korek api', 'Tidak perlu', 'Cotton bud hati-hati/dokter'],
+    jawaban: 3,
+    fakta: 'Membersihkan telinga harus hati-hati agar tidak melukai saluran telinga.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Penyakit dari nyamuk Aedes aegypti...',
+    opsi: ['DBD', 'Flu', 'Diare', 'Sakit gigi'],
+    jawaban: 0,
+    fakta: 'Nyamuk Aedes aegypti menularkan demam berdarah.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Diare disebabkan oleh...',
+    opsi: ['Olahraga', 'Makanan kotor', 'Tidur', 'Cuci tangan'],
+    jawaban: 1,
+    fakta: 'Makanan tidak bersih dapat membawa bakteri penyebab diare.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Imunisasi bertujuan...',
+    opsi: ['Membuat sakit', 'Membuat tinggi', 'Mencegah penyakit', 'Membuat pintar'],
+    jawaban: 2,
+    fakta: 'Imunisasi membantu tubuh melawan penyakit tertentu.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Postur duduk yang baik...',
+    opsi: ['Membungkuk', 'Tiduran', 'Miring', 'Tegak'],
+    jawaban: 3,
+    fakta: 'Postur tegak menjaga kesehatan tulang belakang.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Sumber tenaga utama...',
+    opsi: ['Nasi', 'Sayur', 'Susu', 'Air'],
+    jawaban: 0,
+    fakta: 'Karbohidrat seperti nasi adalah sumber energi utama.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Protein banyak terdapat pada...',
+    opsi: ['Nasi', 'Telur/ikan', 'Minyak', 'Gula'],
+    jawaban: 1,
+    fakta: 'Protein penting untuk pertumbuhan dan perbaikan jaringan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Kekurangan vitamin A menyebabkan...',
+    opsi: ['Sakit gigi', 'Diare', 'Rabun senja', 'Demam'],
+    jawaban: 2,
+    fakta: 'Vitamin A penting untuk kesehatan mata.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Jajan sembarangan menyebabkan...',
+    opsi: ['Mata', 'Tulang', 'Pendengaran', 'Pencernaan'],
+    jawaban: 3,
+    fakta: 'Makanan tidak higienis bisa menyebabkan gangguan pencernaan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Cara mencegah flu...',
+    opsi: ['Masker', 'Berbagi alat makan', 'Tidak cuci tangan', 'Main saat sakit'],
+    jawaban: 0,
+    fakta: 'Masker membantu mencegah penularan virus flu.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Tulang membutuhkan...',
+    opsi: ['Gula', 'Garam', 'Kalsium', 'Lemak'],
+    jawaban: 2,
+    fakta: 'Kalsium memperkuat tulang dan gigi.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Penyebab obesitas anak...',
+    opsi: ['Main luar', 'Terlalu lama HP', 'Olahraga', 'Tidur'],
+    jawaban: 1,
+    fakta: 'Kurang aktivitas fisik meningkatkan risiko obesitas.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'BAB sebaiknya di...',
+    opsi: ['Sembarang', 'Sungai', 'Halaman', 'Toilet'],
+    jawaban: 3,
+    fakta: 'Toilet menjaga sanitasi dan kesehatan lingkungan.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Tanda kurang cairan...',
+    opsi: ['Bibir kering', 'Segar', 'Mata berbinar', 'Kulit lembap'],
+    jawaban: 0,
+    fakta: 'Bibir kering adalah tanda awal dehidrasi.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Cacingan disebabkan...',
+    opsi: ['Banyak minum', 'Olahraga', 'Kotor', 'Tidur'],
+    jawaban: 2,
+    fakta: 'Kebersihan buruk meningkatkan risiko infeksi cacing.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
+    soal: 'Periksa gigi setiap...',
+    opsi: ['5 tahun', 'Tidak perlu', 'Setiap hari', '6 bulan'],
+    jawaban: 3,
+    fakta: 'Kontrol gigi rutin mencegah masalah serius.'
+  },
+  {
+    type: 'pilgan',
+    kategori: 'Kesehatan 💊',
     soal: 'Vitamin apakah yang diproduksi kulit manusia saat terkena sinar matahari?',
     opsi: ['Vitamin A', 'Vitamin B12', 'Vitamin C', 'Vitamin D'],
     jawaban: 3,
@@ -475,20 +755,6 @@ const KUIS_DATA = [
     jawaban: true,
     fakta: 'Fakta! WHO menyatakan cuci tangan dengan sabun dapat mencegah hingga 50% kasus diare dan 30% kasus infeksi saluran pernapasan.'
   },
-  {
-    type: 'faktamitos',
-    kategori: 'Lingkungan 🌍',
-    pernyataan: 'Menanam satu pohon sudah cukup untuk mengimbangi jejak karbon aktivitas harian seseorang.',
-    jawaban: false,
-    fakta: 'Mitos. Satu pohon dewasa menyerap ~22 kg CO₂/tahun. Rata-rata orang Indonesia menghasilkan ~2.200 kg CO₂/tahun—butuh 100+ pohon per orang!'
-  },
-  {
-    type: 'faktamitos',
-    kategori: 'Kesehatan 💊',
-    pernyataan: 'Konsumsi gula berlebih bisa menyebabkan diabetes tipe 2.',
-    jawaban: true,
-    fakta: 'Fakta. Gula berlebih berkontribusi pada obesitas yang merupakan faktor risiko utama diabetes tipe 2, selain genetik dan gaya hidup.'
-  },
   // -------- TEBAK GAMBAR --------
   {
     type: 'tebakgambar',
@@ -521,18 +787,6 @@ const KUIS_DATA = [
 
 const TANTANGAN_DATA = [
   {
-    emoji: '💧',
-    judul: 'Hemat Air Sprint!',
-    deskripsi: 'Siapa yang bisa menyebutkan paling banyak cara hemat air dalam kehidupan sehari-hari? Waktu 30 detik, silakan mulai!',
-    tipe: 'kecepatan'
-  },
-  {
-    emoji: '🌱',
-    judul: 'Guru Lingkungan',
-    deskripsi: 'Siapa yang bisa menjelaskan apa itu "jejak karbon" dengan kalimat sederhana yang bisa dipahami anak SD? Waktu 45 detik!',
-    tipe: 'penjelasan'
-  },
-  {
     emoji: '🧘',
     judul: 'Keseimbangan Hidup',
     deskripsi: 'Berdiri dengan satu kaki selama mungkin! Siapa yang bertahan paling lama tanpa menyentuh lantai dengan kaki yang diangkat?',
@@ -541,14 +795,8 @@ const TANTANGAN_DATA = [
   {
     emoji: '🥦',
     judul: 'Si Raja Buah & Sayur',
-    deskripsi: 'Siapa yang paling banyak menyebutkan nama buah atau sayuran yang baik untuk imunitas tubuh? Waktu 30 detik, tidak boleh mengulang!',
+    deskripsi: 'Siapa yang paling banyak menyebutkan nama buah atau sayuran yang baik tubuh? Waktu 30 detik, tidak boleh mengulang!',
     tipe: 'kecepatan'
-  },
-  {
-    emoji: '🫁',
-    judul: 'Tahan Napas Terlama',
-    deskripsi: 'Tarik napas dalam-dalam, lalu tahan! Siapa yang bisa menahan napas paling lama? Tidak boleh ada nafas pendek-pendek ya!',
-    tipe: 'fisik'
   },
   {
     emoji: '🚯',
@@ -557,15 +805,51 @@ const TANTANGAN_DATA = [
     tipe: 'kecepatan'
   },
   {
-    emoji: '🌡️',
-    judul: 'Detektif Kesehatan',
-    deskripsi: 'Sebutkan 5 gejala umum yang menandakan seseorang kurang tidur! Waktu 20 detik. Siapa yang lebih banyak dan benar?',
-    tipe: 'pengetahuan'
-  },
-  {
     emoji: '🌿',
     judul: 'Cinta Bumi',
     deskripsi: 'Sebutkan manfaat-manfaat pohon bagi manusia dan lingkungan! Siapa yang lebih banyak dalam 30 detik? GO!',
+    tipe: 'kecepatan'
+  },
+  {
+    emoji: '🐟'
+    judul: 'Hewan Air Sprint!',
+    deskripsi: 'Siapa yang lebih dulu menyebutkan 5 hewan yang hidup di air dengan benar? Waktu 30 detik, silakan mulai!',
+    tipe: 'kecepatan',
+  },
+  {
+    emoji: '📚,
+    judul: 'Benda di Kelas Sprint!',
+    deskripsi: 'Pemain tercepat yang bisa menyebutkan 5 benda yang biasa ada di kelas akan menang! Waktu 30 detik, silakan mulai!',
+    tipe: 'kecepatan',
+  },
+  {
+    emoji: '🎨',
+    judul: 'Warna Sprint!',
+    deskripsi: 'Siapa yang tercepat menyebutkan 5 warna berbeda akan menjadi pemenangnya! Waktu 30 detik, silakan mulai!',
+    tipe: 'kecepatan'
+  },
+  {
+    emoji: '🧠',
+    judul: 'Anggota Tubuh',
+    deskripsi: 'Sebutkan 5 anggota tubuh manusia dalam 30 detik! Siapa yang paling banyak dan benar?',
+    tipe: 'kecepatan'
+  },
+  {
+    emoji: '🐄'
+    judul: 'Hewan Berkaki Empat Sprint!',
+    deskripsi: 'Siapa yang tercepat menyebutkan 5 hewan berkaki empat akan menjadi pemenangnya! Waktu 30 detik, silakan mulai!',
+    tipe: 'kecepatan',
+  },
+  {
+    judul: 'Alat Kebersihan Sprint!',
+    deskripsi: 'Siapa yang tercepat menyebutkan 5 alat kebersihan dengan benar akan menang! Waktu 30 detik, silakan mulai!',
+    tipe: 'kecepatan',
+    emoji: '🧽'
+  },
+  {
+    emoji: '🦷',
+    judul: 'Musuh Gigi Berlubang',
+    deskripsi: 'Sebutkan makanan atau minuman yang bisa merusak gigi! Waktu 20 detik.',
     tipe: 'kecepatan'
   },
 ];
@@ -642,5 +926,3 @@ const KESEMPATAN_DATA = [
     warna: 'positive'
   },
 ];
-
-

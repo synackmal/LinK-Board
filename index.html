@@ -1396,9 +1396,45 @@ function renderTantanganPlay() {
   clearTantanganTimer();
   const { card } = getRandomCard(TANTANGAN_DATA, G.usedTantangan);
   G.currentCard = card;
+  G.answered = false;
   const c = G.players[G.challenger];
   const o = G.players[G.opponent];
   const challengeSeconds = getChallengeSeconds(card);
+  const letters = ['A','B','C','D'];
+  const challengeHTML = card.type === 'pilgan'
+    ? `
+    <div class="challenge-box">
+      <div class="question-kategori">${card.kategori} • Level Hard</div>
+      <div class="challenge-title">Soal untuk ${c.name}</div>
+      <div class="question-text">${card.soal}</div>
+      <div class="options-grid">
+        ${card.opsi.map((opsi,i) => `
+          <button class="opt-btn" id="tantangan-opt-${i}"
+            onclick="answerTantanganPilgan(${i})">
+            <span class="opt-letter">${letters[i]}</span>${opsi}
+          </button>`).join('')}
+      </div>
+    </div>`
+    : `
+    <div class="challenge-box">
+      <span class="challenge-emoji">${card.emoji}</span>
+      <div class="challenge-title">${card.judul}</div>
+      <div class="challenge-desc">${card.deskripsi}</div>
+    </div>
+    <div class="divider"></div>
+    <div class="modal-title" style="font-size:1rem">Siapa yang menang?</div>
+    <div class="winner-grid">
+      <button class="winner-btn" onclick="resolveTantangan(${G.challenger})">
+        <div class="w-avatar">${c.initial}</div>
+        <div>${c.name}</div>
+        <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
+      </button>
+      <button class="winner-btn" onclick="resolveTantangan(${G.opponent})">
+        <div class="w-avatar">${o.initial}</div>
+        <div>${o.name}</div>
+        <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
+      </button>
+    </div>`;
 
   document.getElementById('tantangan-content').innerHTML = `
     <div class="modal-tag tag-tantangan">⚔️ Tantangan</div>
@@ -1423,26 +1459,22 @@ function renderTantanganPlay() {
     <div class="point-stake" style="display:block;text-align:center;margin-bottom:1rem">
       💰 Taruhan: ${G.betAmount.toLocaleString()} poin
     </div>
-    <div class="challenge-box">
-      <span class="challenge-emoji">${card.emoji}</span>
-      <div class="challenge-title">${card.judul}</div>
-      <div class="challenge-desc">${card.deskripsi}</div>
-    </div>
-    <div class="divider"></div>
-    <div class="modal-title" style="font-size:1rem">Siapa yang menang?</div>
-    <div class="winner-grid">
-      <button class="winner-btn" onclick="resolveTantangan(${G.challenger})">
-        <div class="w-avatar">${c.initial}</div>
-        <div>${c.name}</div>
-        <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
-      </button>
-      <button class="winner-btn" onclick="resolveTantangan(${G.opponent})">
-        <div class="w-avatar">${o.initial}</div>
-        <div>${o.name}</div>
-        <div style="font-size:0.78rem;color:var(--muted)">Menang!</div>
-      </button>
-    </div>`;
+    ${challengeHTML}`;
   if (challengeSeconds) startTantanganTimer(challengeSeconds);
+}
+
+function answerTantanganPilgan(selected) {
+  if (G.answered) return;
+  G.answered = true;
+  clearTantanganTimer();
+  const correct = G.currentCard.jawaban;
+  document.querySelectorAll('.opt-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    else if (i === selected) btn.classList.add('wrong');
+  });
+  const winnerIdx = selected === correct ? G.challenger : G.opponent;
+  setTimeout(() => resolveTantangan(winnerIdx), 800);
 }
 
 function resolveTantangan(winnerIdx) {
@@ -1472,12 +1504,14 @@ function resolveTantangan(winnerIdx) {
         <div class="result-main red">${l.name} −${bet.toLocaleString()} poin</div>
       </div>
     </div>
+    ${G.currentCard && G.currentCard.fakta ? `<div class="explanation-box">💡 ${G.currentCard.fakta}</div>` : ''}
     <div class="divider"></div>
     <button class="btn-action btn-red" onclick="openTantangan()">Battle Lagi</button>
     <button class="btn-outline" onclick="closeModal('overlay-tantangan')">Tutup</button>`;
 }
 
 function getChallengeSeconds(card) {
+  if (card.type === 'pilgan') return 30;
   const match = card.deskripsi.match(/(\d+)\s*detik/i);
   if (match) return parseInt(match[1], 10);
   if (card.tipe === 'fisik') return 0;
@@ -1498,6 +1532,15 @@ function startTantanganTimer(seconds) {
     if (G.tantanganTimeLeft <= 0) {
       clearTantanganTimer();
       playScoreSound(-1);
+      if (G.currentCard && G.currentCard.type === 'pilgan' && !G.answered) {
+        G.answered = true;
+        document.querySelectorAll('.opt-btn').forEach(btn => btn.disabled = true);
+        const correctBtn = document.getElementById(`tantangan-opt-${G.currentCard.jawaban}`);
+        if (correctBtn) correctBtn.classList.add('correct');
+        showToast('Waktu habis! Lawan menang tantangan.');
+        setTimeout(() => resolveTantangan(G.opponent), 800);
+        return;
+      }
       showToast('Waktu tantangan habis! Pilih pemenang sesuai hasil.');
     }
   }, 1000);

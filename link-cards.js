@@ -8,14 +8,6 @@ const KUIS_DATA = [
   {
     type: 'pilgan',
     kategori: 'Lingkungan 🌍',
-    soal: 'Gas apakah yang paling banyak berkontribusi terhadap efek rumah kaca buatan manusia?',
-    opsi: ['Oksigen (O₂)', 'Karbon Dioksida (CO₂)', 'Nitrogen (N₂)', 'Uap Air (H₂O)'],
-    jawaban: 1,
-    fakta: 'CO₂ dari pembakaran bahan bakar fosil adalah kontributor terbesar perubahan iklim buatan manusia.'
-  },
-  {
-    type: 'pilgan',
-    kategori: 'Lingkungan 🌍',
     soal: 'Sampah sebaiknya dibuang ke...',
     opsi: ['Sungai', 'Tempat sampah', 'Selokan', 'Laut'],
     jawaban: 1,
@@ -124,14 +116,6 @@ const KUIS_DATA = [
     opsi: ['Menambah sampah', 'Mengurangi jumlah sampah', 'Menambah polusi', 'Menambah limbah'],
     jawaban: 1,
     fakta: 'Daur ulang mengubah sampah menjadi barang baru sehingga mengurangi timbunan sampah.'
-  },
-  {
-    type: 'pilgan',
-    kategori: 'Lingkungan 🌍',
-    soal: 'Gerakan Gemar Makan Ikan bertujuan...',
-    opsi: ['Menambah sampah', 'Menyehatkan masyarakat', 'Mengurangi belajar', 'Mengurangi olahraga'],
-    jawaban: 1,
-    fakta: 'Ikan kaya protein dan gizi yang baik untuk kesehatan dan pertumbuhan.'
   },
   {
     type: 'pilgan',
@@ -280,7 +264,7 @@ const KUIS_DATA = [
   {
     type: 'pilgan',
     kategori: 'Lingkungan 🌍',
-    soal: 'Membawa tumbler dapat membantu mengurangi...',
+    soal: 'Membawa tumbler/tempat minum dapat membantu mengurangi...',
     opsi: ['Sampah plastik', 'Oksigen', 'Pohon', 'Air hujan'],
     jawaban: 0,
     fakta: 'Menggunakan tumbler mengurangi kebutuhan botol plastik sekali pakai.'
@@ -484,14 +468,6 @@ const KUIS_DATA = [
     opsi: ['Gula', 'Vitamin', 'Minyak', 'Garam'],
     jawaban: 1,
     fakta: 'Vitamin penting untuk menjaga sistem imun dan kesehatan tubuh.'
-  },
-  {
-    type: 'pilgan',
-    kategori: 'Kesehatan 💊',
-    soal: 'Kita tidur malam sebaiknya selama...',
-    opsi: ['1 jam', '20 jam', '8–10 jam', 'Tidak tidur'],
-    jawaban: 2,
-    fakta: 'Anak-anak membutuhkan sekitar 8–10 jam tidur untuk pertumbuhan optimal.'
   },
   {
     type: 'pilgan',
@@ -805,12 +781,6 @@ const TANTANGAN_DATA = [
     tipe: 'kecepatan'
   },
   {
-    emoji: '🌿',
-    judul: 'Cinta Bumi',
-    deskripsi: 'Sebutkan manfaat-manfaat pohon bagi manusia dan lingkungan! Siapa yang lebih banyak dalam 30 detik? GO!',
-    tipe: 'kecepatan'
-  },
-  {
     emoji: '🐟',
     judul: 'Hewan Air Sprint!',
     deskripsi: 'Siapa yang lebih dulu menyebutkan 5 hewan yang hidup di air dengan benar? Waktu 30 detik, silakan mulai!',
@@ -863,7 +833,25 @@ const TANTANGAN_DATA = [
     judul: 'Penyakit',
     deskripsi: 'Sebutkan penyakit yang biasanya dialami manusia! Waktu 30 detik.',
     tipe: 'kecepatan'
-  }
+  },
+  {
+    emoji: '👁️',
+    judul: 'Tatap Tanpa Kedip',
+    deskripsi: 'Tatap mata lawan tanpa berkedip! Siapa yang berkedip duluan kalah. Boleh senyum, tapi jangan kedip!',
+    tipe: 'fisik'
+  },
+  {
+    emoji: '😶',
+    judul: 'Wajah Tanpa Ekspresi',
+    deskripsi: 'Jaga wajah tanpa ekspresi selama pemain lain berusaha membuat kamu tertawa selama 30 detik! Tidak boleh memalingkan muka. Siapa yang tahan?',
+    tipe: 'fisik'
+  },
+  {
+    emoji: '🦶',
+    judul: 'Jalan di Tempat',
+    deskripsi: 'Tutup mata, jalan di tempat 5 langkah, lalu berhenti. Buka mata! Siapa yang posisinya paling tidak bergeser dari titik awal?',
+    tipe: 'fisik'
+  },
 ];
 
 const KESEMPATAN_DATA = [
@@ -878,7 +866,7 @@ const KESEMPATAN_DATA = [
     emoji: '🌬️',
     judul: 'Polusi Udara Meningkat',
     deskripsi: 'Kualitas udara di kotamu memburuk karena pabrik sekitar. Kamu harus membeli masker dan alat penjernih udara.',
-    efek: { tipe: 'minus', nilai: 25 },
+    efek: { tipe: 'minus', nilai: 20 },
     warna: 'negative'
   },
   {
@@ -892,21 +880,21 @@ const KESEMPATAN_DATA = [
     emoji: '🤒',
     judul: 'Kurang Tidur!',
     deskripsi: 'Kamu begadang terlalu sering minggu ini. Imunitas menurun dan kamu jatuh sakit. Istirahat dulu!',
-    efek: { tipe: 'minus', nilai: 20 },
+    efek: { tipe: 'minus', nilai: 15 },
     warna: 'negative'
   },
   {
     emoji: '🚲',
     judul: 'Bersepeda ke Kantor',
     deskripsi: 'Kamu memilih bersepeda selama seminggu penuh! Tubuh sehat, emisi karbon berkurang. Luar biasa!',
-    efek: { tipe: 'add', nilai: 35 },
+    efek: { tipe: 'add', nilai: 40 },
     warna: 'positive'
   },
   {
     emoji: '🌊',
     judul: 'Banjir Rob',
     deskripsi: 'Naiknya air laut akibat perubahan iklim menyebabkan banjir di wilayahmu. Kerugian cukup besar.',
-    efek: { tipe: 'minus', nilai: 40 },
+    efek: { tipe: 'minus', nilai: 25 },
     warna: 'negative'
   },
   {
@@ -927,7 +915,7 @@ const KESEMPATAN_DATA = [
     emoji: '🏭',
     judul: 'Asap Pabrik',
     deskripsi: 'Pabrik di dekat rumahmu membuang limbah sembarangan. Kamu terdampak dan harus menanggung biaya kesehatan.',
-    efek: { tipe: 'minus', nilai: 30 },
+    efek: { tipe: 'minus', nilai: 25 },
     warna: 'negative'
   },
   {
